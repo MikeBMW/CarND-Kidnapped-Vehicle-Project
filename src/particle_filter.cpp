@@ -268,37 +268,27 @@ void ParticleFilter::resample() {
 			big_number = k;
 		}
 	}		
-std::vector<Particle> particles_resample;
-	particles_resample.clear();	
-
+	std::vector<Particle> particles_resample;
+	particles_resample.clear();
 
 	default_random_engine e;
-        uniform_int_distribution<unsigned> u(0, 10);
-        //for(int i=0; i<10; ++i)
-         //   cout<<u(e)<<endl;
-	//p3 = []
+        uniform_int_distribution<unsigned> u(0, 10);        
 	int index;
-index = int((u(e)/10) * num_particles);
-double beta = 0.0;
-//mw = big_weight;
-//for i in range(N):
-for (int k = 0; k < num_particles; ++k){
-    beta += (u(e)/10) * 2.0 * big_weight;
-    while( beta > particles[index].weight){
-        beta -= particles[index].weight;
-        index = (index + 1) % num_particles;
+	index = int((u(e)/10) * num_particles);
+	double beta = 0.0;
+	for (int k = 0; k < num_particles; ++k){
+    		beta += (u(e)/10) * 2.0 * big_weight;
+    		while( beta > particles[index].weight){
+        		beta -= particles[index].weight;
+        		index = (index + 1) % num_particles;
+		}    
+		particles_resample.push_back(particles[index]);
 	}
-    //p3.append(p[index])
-	particles_resample.push_back(particles[index]);
-}
-particles.clear();
-	////v1.assign(v2.begin(), v2.end());
-particles.assign(particles_resample.begin(),particles_resample.end());
-for (int k = 0; k < num_particles; ++k){
-cout << "particle resample   " << k+1<<"  "<<particles[k].weight << endl;
-}
-//p = p3
-    
+	particles.clear();	
+	particles.assign(particles_resample.begin(),particles_resample.end());
+	for (int k = 0; k < num_particles; ++k){
+		cout << "particle resample   " << k+1<<"  "<<particles[k].weight << endl;
+	}    
 	cout << "+++++++++++++++++++++++++++++++++++++++++++++++++   " <<  endl;
 	cout << "biggest weight   " << big_weight << endl;
 	//if (big_weight > 1.0) {
@@ -306,9 +296,7 @@ cout << "particle resample   " << k+1<<"  "<<particles[k].weight << endl;
 	//}
         /*
 	std::vector<Particle> particles_resample;
-	particles_resample.clear();
-
-	        
+	particles_resample.clear();	        
 	
 	for (int k = 0; k < num_particles; ++k) {
 		if( (particles[k].weight / total_weight) < 0.05) {
@@ -323,7 +311,6 @@ cout << "particle resample   " << k+1<<"  "<<particles[k].weight << endl;
 	////v1.assign(v2.begin(), v2.end());
 	particles.assign(particles_resample.begin(),particles_resample.end());
 	*/
-
 }
 
 Particle ParticleFilter::SetAssociations(Particle& particle, const std::vector<int>& associations, 
