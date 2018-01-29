@@ -199,9 +199,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 			
 		
 			//calculate distance
-	//if (big_weight > 1.0) {
-	//	is_initialized = 0;
-	//}		for(int j = 0; j < 42; j++)
+			for(int j = 0; j < 42; j++)
 			{
 				double distance;
 				double distance_map;
